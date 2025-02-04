@@ -1,0 +1,43 @@
+@layer utilities {
+  /* Scroll-triggered reveal animation */
+  [data-reveal] {
+    @apply opacity-0 translate-y-8 transition-slow;
+  }
+  
+  [data-reveal="true"] {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Enhanced hover states */
+  .hover-scale {
+    @apply transition-slow hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl;
+  }
+
+  /* Gradient CTA pulse effect */
+  .animated-gradient {
+    @apply relative overflow-hidden;
+    &::after {
+      @apply content-[''] absolute inset-0 opacity-0 animate-pulse;
+      background: inherit;
+      transition: opacity 0.4s ease;
+    }
+    &:hover::after {
+      @apply opacity-20;
+    }
+  }
+}
+
+/* Enhanced floating animation */
+.floating-element {
+  @apply animate-float will-change-transform;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04));
+}
+
+/* Section transition orchestration */
+section:nth-child(even) [data-reveal] {
+  transition-delay: 150ms !important;
+}
+
+section:nth-child(odd) [data-reveal] {
+  transition-delay: 300ms !important;
+} 

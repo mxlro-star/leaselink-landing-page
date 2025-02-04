@@ -1,0 +1,70 @@
+html {
+  scroll-behavior: smooth;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom reveal animations */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+[data-reveal="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradient animation for CTAs */
+.animated-gradient {
+  background: linear-gradient(270deg, #4ecdc4, #ff6b6b);
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+/* Floating animation for key elements */
+.floating-element {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Neumorphic design for cards */
+.card-neumorphic {
+  background: #ffffff;
+  box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-neumorphic:hover {
+  transform: translateY(-5px);
+  box-shadow: 12px 12px 20px #d1d9e6, -12px -12px 20px #ffffff;
+}
+
+/* Soft transitions for interactive elements */
+.interactive-hover {
+  transition: all 0.3s ease;
+}
+
+.interactive-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4ecdc4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6b6b;
+} 
