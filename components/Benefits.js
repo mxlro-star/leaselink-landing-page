@@ -4,9 +4,22 @@ import { useState, useEffect } from "react";
 export default function Benefits() {
   const [activeCard, setActiveCard] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [backgroundElements, setBackgroundElements] = useState([]);
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // Generate background elements on client side only
+    const elements = Array.from({ length: 20 }, () => ({
+      width: Math.random() * 300 + 100,
+      height: Math.random() * 300 + 100,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      animationDelay: Math.random() * 4,
+      animationDuration: Math.random() * 10 + 15,
+      opacity: Math.random() * 0.3
+    }));
+    setBackgroundElements(elements);
   }, []);
 
   const benefits = [
@@ -49,18 +62,18 @@ export default function Benefits() {
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0A1930]/80 via-[#1E3A8A]/20 to-[#0A1930]/80" />
-        {[...Array(20)].map((_, i) => (
+        {backgroundElements.map((element, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-gradient-to-r from-white/[0.03] to-blue-300/[0.05] transition-opacity duration-1000"
             style={{
-              width: Math.random() * 300 + 100 + 'px',
-              height: Math.random() * 300 + 100 + 'px',
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              animationDelay: Math.random() * 4 + 's',
-              animationDuration: Math.random() * 10 + 15 + 's',
-              opacity: Math.random() * 0.3
+              width: `${element.width}px`,
+              height: `${element.height}px`,
+              left: `${element.left}%`,
+              top: `${element.top}%`,
+              animationDelay: `${element.animationDelay}s`,
+              animationDuration: `${element.animationDuration}s`,
+              opacity: element.opacity
             }}
           />
         ))}
