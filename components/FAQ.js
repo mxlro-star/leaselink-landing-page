@@ -11,8 +11,8 @@ export default function FAQ() {
 
   const faqs = [
     {
-      question: "What is a Company Lease?",
-      answer: "A Company Lease is a rental agreement where a company, rather than an individual, becomes your tenant. The company pays rent directly to you, guaranteeing consistent income regardless of occupancy, while managing all property-related responsibilities.",
+      question: "What is a Company Let?",
+      answer: "A Company Let is a rental agreement where a company, rather than an individual, becomes your tenant. The company pays rent directly to you, guaranteeing consistent income regardless of occupancy, while managing all property-related responsibilities.",
       category: "Basics"
     },
     {

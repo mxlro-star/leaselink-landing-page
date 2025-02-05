@@ -5,11 +5,34 @@ export default function Process() {
   const [activeStep, setActiveStep] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [backgroundElements, setBackgroundElements] = useState([]);
+  const [propertiesValued, setPropertiesValued] = useState("1,257");
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      const isTouchDevice = 
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        navigator.msMaxTouchPoints > 0;
+      setIsMobile(isTouchDevice);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     setIsVisible(true);
     
-    // Generate background elements on client side only
+    // Calculate properties valued based on time
+    const baseProperties = 1257;
+    const propertiesPerDay = 35;
+    const startDate = new Date('2025-01-01').getTime();
+    const currentDate = new Date().getTime();
+    const daysSinceStart = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+    const totalProperties = baseProperties + (daysSinceStart * propertiesPerDay);
+    setPropertiesValued(totalProperties.toLocaleString());
+
+    // Generate background elements
     const elements = Array.from({ length: 15 }, () => ({
       width: Math.random() * 300 + 100,
       height: Math.random() * 300 + 100,
@@ -20,16 +43,21 @@ export default function Process() {
       opacity: Math.random() * 0.3
     }));
     setBackgroundElements(elements);
+
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const steps = [
     {
       number: "1",
-      title: "Submit Your Property",
-      description: "Fill out a quick form with your property details. Expect a follow-up within 24 hours.",
-      icon: "📝",
-      stat: "2 Min Form",
-      highlight: "Quick & Easy"
+      title: "Get Your Instant Valuation",
+      description: "Join 1000+ landlords who've discovered their true rental potential. Takes only 30 seconds.",
+      icon: "⚡",
+      stat: "30 Sec",
+      highlight: "Free Analysis",
+      metrics: {
+        accuracy: "97%"
+      }
     },
     {
       number: "2",
@@ -52,7 +80,7 @@ export default function Process() {
       title: "Start Earning",
       description: "Receive guaranteed monthly payments with a hassle-free, streamlined process.",
       icon: "💰",
-      stat: "£2500 Avg/mo",
+      stat: "Day 1",
       highlight: "Guaranteed"
     }
   ];
@@ -94,79 +122,242 @@ export default function Process() {
           {/* Timeline line for desktop */}
           <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent transform -translate-y-1/2" />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-4">
             {steps.map((step, index) => (
               <div
                 key={index}
-                className={`
-                  relative transition-all duration-500
-                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
-                `}
-                style={{ transitionDelay: `${index * 150}ms` }}
-                onMouseEnter={() => setActiveStep(index)}
-                onMouseLeave={() => setActiveStep(null)}
+                className="relative min-h-[24rem] sm:min-h-[26rem]"
               >
                 <div className={`
-                  relative rounded-2xl p-6 md:p-8 transition-all duration-300
-                  ${activeStep === index ? 'transform scale-105' : 'hover:scale-102'}
+                  relative rounded-2xl p-4 sm:p-6 md:p-8 transition-all duration-300
+                  ${activeStep === index ? 'transform scale-[1.02]' : 'hover:scale-[1.01]'}
                   overflow-hidden backdrop-blur-sm border border-white/10
-                  bg-gradient-to-br from-white/[0.05] to-blue-500/[0.05]
+                  bg-gradient-to-br ${index === 0 ? 'from-emerald-500/80 to-green-600/80 hover:from-emerald-500/90 hover:to-green-600/90' : 'from-indigo-600/90 to-violet-700/90 hover:from-indigo-600 hover:to-violet-700'}
+                  flex flex-col h-full justify-between
+                  ${index === 0 ? 'cursor-pointer group/card shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30' : 'shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30'}
                 `}>
                   {/* Step number with animated ring */}
                   <div className="relative mb-6">
                     <div className={`
-                      w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400/20 to-blue-600/20
+                      w-14 h-14 rounded-xl 
+                      ${index === 0 ? 'bg-gradient-to-br from-green-300/90 via-emerald-400/90 to-green-500/90 group-hover/card:from-green-300 group-hover/card:via-emerald-400 group-hover/card:to-green-500' : 'bg-gradient-to-br from-violet-300/30 to-indigo-600/30'}
                       flex items-center justify-center text-2xl font-bold text-white
                       relative z-10 mx-auto transition-transform duration-300
                       ${activeStep === index ? 'scale-110' : ''}
                     `}>
-                      {step.number}
+                      {index === 0 ? (
+                        <div className="relative">
+                          {/* Main flash icon */}
+                          <svg className="w-8 h-8 transform transition-all duration-300 group-hover/card:scale-110" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path 
+                              d="M13 3L4 14H12L11 21L20 10H12L13 3Z" 
+                              className="animate-flash-glow"
+                              stroke="url(#goldGradient)"
+                              strokeWidth="2" 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round"
+                            />
+                            <defs>
+                              <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#FFD700" />
+                                <stop offset="50%" stopColor="#FFC107" />
+                                <stop offset="100%" stopColor="#FF8F00" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                          
+                          {/* Speed lines */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-12 h-12 absolute">
+                              {[...Array(3)].map((_, i) => (
+                                <div
+                                  key={i}
+                                  className="absolute inset-0 animate-speed-line"
+                                  style={{
+                                    border: '2px solid rgba(255, 215, 0, 0.4)',
+                                    borderRadius: '50%',
+                                    animationDelay: `${i * 0.2}s`
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Particle effects */}
+                          {[...Array(6)].map((_, i) => (
+                            <div
+                              key={i}
+                              className="absolute w-1 h-1 rounded-full animate-particle"
+                              style={{
+                                background: 'linear-gradient(to right, #FFD700, #FFC107)',
+                                left: '50%',
+                                top: '50%',
+                                transform: `rotate(${i * 60}deg) translateX(10px)`,
+                                animationDelay: `${i * 0.1}s`,
+                                boxShadow: '0 0 4px rgba(255, 215, 0, 0.6)'
+                              }}
+                            />
+                          ))}
+
+                          {/* Add radial glow effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 blur-xl rounded-full animate-pulse-slow"></div>
+                        </div>
+                      ) : (
+                        step.number
+                      )}
                       <div className={`
-                        absolute inset-0 rounded-xl border border-blue-400/30
+                        absolute inset-0 rounded-xl border border-white/30
                         transition-transform duration-500
                         ${activeStep === index ? 'scale-150 opacity-0' : 'scale-100 opacity-100'}
                       `} />
                     </div>
                   </div>
 
-                  {/* Icon */}
-                  <div className="text-3xl mb-4 text-center">
-                    <span className={`inline-block transition-transform duration-300 ${activeStep === index ? 'scale-125' : ''}`}>
-                      {step.icon}
-                    </span>
-                  </div>
+                  {/* Remove the duplicate icon section for first card */}
+                  {index !== 0 && (
+                    <div className="text-3xl mb-4 text-center">
+                      <span className={`inline-block transition-transform duration-300 
+                        ${activeStep === index ? 'scale-125' : ''}
+                      `}>
+                        {step.icon}
+                      </span>
+                    </div>
+                  )}
 
                   {/* Content */}
-                  <h3 className="text-xl md:text-2xl font-semibold mb-3 text-white text-center">
-                    {step.title}
-                  </h3>
-                  <p className="text-blue-100/80 mb-4 text-center text-sm md:text-base">
-                    {step.description}
-                  </p>
+                  <div className="flex-grow">
+                    <h3 className={`text-xl md:text-2xl font-semibold mb-3 text-white text-center
+                      ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
+                    `}>
+                      {step.title}
+                    </h3>
+                    <p className={`mb-4 text-center text-sm md:text-base
+                      ${index === 0 ? 'text-blue-100/80' : 'text-violet-100/90'}
+                    `}>
+                      {step.description}
+                    </p>
+                    
+                    {/* Update metrics panel for first card */}
+                    {index === 0 && (
+                      <div className="grid grid-cols-2 gap-4 mb-4 p-3 rounded-lg bg-emerald-900/20 border border-emerald-400/20">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
+                            {propertiesValued}
+                          </div>
+                          <div className="text-xs text-emerald-200/90">
+                            Properties Valued
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
+                            110%
+                          </div>
+                          <div className="text-xs text-emerald-200/90">
+                            vs National Average
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Update CTA button for first card */}
+                    {index === 0 && (
+                      <div className="mt-4 text-center">
+                        <div className={`
+                          inline-flex items-center justify-center px-6 py-3 
+                          bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400
+                          rounded-lg transform transition-all duration-300 
+                          shadow-[0_0_15px_rgba(251,191,36,0.3)]
+                          relative overflow-hidden
+                          border border-amber-300/30
+                          ${isMobile ? 'animate-mobile-button' : 'group/button hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300'}
+                          ${isMobile ? 'active:scale-95' : 'group-hover/card:scale-105'}
+                        `}>
+                          {/* Animated gradient overlay - Different for mobile */}
+                          <div className={`
+                            absolute inset-0 
+                            ${isMobile 
+                              ? 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-mobile-shine'
+                              : 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-[shine_1.5s_ease-in-out_infinite]'
+                            }
+                          `}></div>
+                          
+                          {/* Pulsing glow effect - Always visible on mobile */}
+                          <div className={`
+                            absolute inset-0 bg-gradient-to-r from-amber-400/0 via-yellow-300/30 to-amber-400/0 blur-xl
+                            ${isMobile ? 'opacity-100 animate-mobile-pulse' : 'opacity-0 group-hover/button:opacity-100 animate-pulse-fast'}
+                          `}></div>
+
+                          {/* Button content */}
+                          <span className="text-amber-900 font-bold text-lg relative">
+                            Calculate Now
+                          </span>
+                          
+                          {/* Arrow with enhanced animation - Different for mobile */}
+                          <div className={`
+                            relative ml-2 
+                            ${isMobile ? 'animate-mobile-arrow' : 'group-hover/button:translate-x-1 transition-transform duration-300'}
+                          `}>
+                            <svg className="w-5 h-5 text-amber-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                          </div>
+
+                          {/* Particle burst - Mobile version */}
+                          {isMobile && (
+                            <div className="absolute inset-0 pointer-events-none">
+                              {[...Array(6)].map((_, i) => (
+                                <div
+                                  key={i}
+                                  className="absolute w-1 h-1 rounded-full bg-yellow-300/80 animate-mobile-particle"
+                                  style={{
+                                    left: '50%',
+                                    top: '50%',
+                                    transform: `rotate(${i * 60}deg) translateX(0)`,
+                                    animationDelay: `${i * 0.3}s`
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
                   {/* Stats and Highlight */}
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-blue-400/20">
+                  <div className={`
+                    flex items-center justify-between mt-4 pt-4 border-t
+                    ${index === 0 ? 'border-emerald-400/20' : 'border-violet-400/20'}
+                  `}>
                     <div className="text-center flex-1">
-                      <div className="text-lg font-semibold text-white">
+                      <div className={`text-lg font-semibold text-white
+                        ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
+                      `}>
                         {step.stat}
                       </div>
                     </div>
-                    <div className="h-8 w-px bg-gradient-to-b from-transparent via-blue-400/20 to-transparent" />
+                    <div className={`h-8 w-px bg-gradient-to-b from-transparent ${index === 0 ? 'via-emerald-400/20' : 'via-violet-400/30'} to-transparent`} />
                     <div className="text-center flex-1">
-                      <div className="text-sm text-blue-200/90">
+                      <div className={`text-sm
+                        ${index === 0 ? 'text-emerald-200/90 group-hover/card:text-white' : 'text-violet-200/90 group-hover:text-white'}
+                      `}>
                         {step.highlight}
                       </div>
                     </div>
                   </div>
 
-                  {/* Connector line with animated dot for desktop */}
-                  {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
-                      <div className={`
-                        absolute top-1/2 right-0 w-2 h-2 rounded-full
-                        transition-all duration-300
-                        ${activeStep === index || activeStep === index + 1 ? 'bg-blue-400 scale-150' : 'bg-blue-400/40 scale-100'}
-                      `} />
+                  {/* Add pulsing arrow for first card */}
+                  {index === 0 && (
+                    <div className="absolute -right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                      <div className="animate-pulse">
+                        <svg className="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -175,6 +366,158 @@ export default function Process() {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes flash-glow {
+          0%, 100% {
+            filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+          }
+          50% {
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+          }
+        }
+
+        @keyframes speed-line {
+          0% {
+            transform: scale(0.5);
+            opacity: 0.8;
+            border-color: rgba(255, 215, 0, 0.4);
+          }
+          100% {
+            transform: scale(1.5);
+            opacity: 0;
+            border-color: rgba(255, 215, 0, 0.1);
+          }
+        }
+
+        @keyframes particle {
+          0% {
+            transform: rotate(var(--rotation)) translateX(10px) scale(1);
+            opacity: 1;
+            background: linear-gradient(to right, #FFD700, #FFC107);
+          }
+          100% {
+            transform: rotate(var(--rotation)) translateX(20px) scale(0);
+            opacity: 0;
+            background: linear-gradient(to right, #FFC107, #FF8F00);
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.1);
+          }
+        }
+
+        @keyframes particle-burst {
+          0% {
+            transform: rotate(var(--rotation)) translateX(0);
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            transform: rotate(var(--rotation)) translateX(20px);
+            opacity: 0;
+          }
+        }
+
+        @keyframes shine {
+          0% {
+            transform: translateX(-100%) skew(-15deg);
+          }
+          100% {
+            transform: translateX(200%) skew(-15deg);
+          }
+        }
+
+        @keyframes mobile-shine {
+          0% {
+            transform: translateX(-200%) skew(-15deg);
+          }
+          100% {
+            transform: translateX(200%) skew(-15deg);
+          }
+        }
+
+        @keyframes mobile-particle {
+          0%, 100% {
+            transform: rotate(var(--rotation)) translateX(10px);
+            opacity: 0;
+          }
+          50% {
+            transform: rotate(var(--rotation)) translateX(20px);
+            opacity: 0.8;
+          }
+        }
+
+        @keyframes mobile-arrow {
+          0%, 100% {
+            transform: translateX(0);
+          }
+          50% {
+            transform: translateX(4px);
+          }
+        }
+
+        @keyframes mobile-button {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 15px rgba(251,191,36,0.3);
+          }
+          50% {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(251,191,36,0.5);
+          }
+        }
+
+        .animate-flash-glow {
+          animation: flash-glow 1.5s ease-in-out infinite;
+        }
+
+        .animate-speed-line {
+          animation: speed-line 1.5s ease-out infinite;
+        }
+
+        .animate-particle {
+          animation: particle 1s ease-out infinite;
+          --rotation: 0deg;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+
+        .animate-pulse-fast {
+          animation: pulse 1s ease-in-out infinite;
+        }
+
+        .animate-mobile-shine {
+          animation: mobile-shine 3s ease-in-out infinite;
+        }
+
+        .animate-mobile-button {
+          animation: mobile-button 2s ease-in-out infinite;
+        }
+
+        .animate-mobile-arrow {
+          animation: mobile-arrow 2s ease-in-out infinite;
+        }
+
+        .animate-mobile-particle {
+          animation: mobile-particle 2s ease-in-out infinite;
+        }
+
+        .animate-mobile-pulse {
+          animation: pulse 2s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 } 

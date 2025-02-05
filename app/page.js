@@ -5,12 +5,14 @@ import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
+import Tenants from "../components/Tenants";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       <Hero data-reveal="true" />
       <Benefits data-reveal="true" />
+      <Tenants data-reveal="true" />
       <Process data-reveal="true" />
       <Testimonials data-reveal="true" />
       <FAQ data-reveal="true" />
