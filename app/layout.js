@@ -2,17 +2,21 @@ import '../styles/globals.css';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 
-// Dynamically import components to reduce initial DOM size
+// Dynamically import components with priority loading
 const ScrollProgress = dynamic(() => import('../components/ScrollProgress'), { 
   ssr: false,
-  loading: () => null // Prevent loading placeholder from adding to DOM
-});
-const BackToTop = dynamic(() => import('../components/BackToTop'), { 
-  ssr: false,
-  loading: () => null // Prevent loading placeholder from adding to DOM
+  loading: () => null,
+  // Reduce script parsing/compilation by loading after critical content
+  priority: false 
 });
 
-// Structured Data as a constant to ensure consistency between server and client
+const BackToTop = dynamic(() => import('../components/BackToTop'), { 
+  ssr: false,
+  loading: () => null,
+  priority: false
+});
+
+// Move structured data outside component to prevent re-creation
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
@@ -86,10 +90,10 @@ const structuredData = {
   }
 };
 
-export const metadata = {
+// Precompute metadata to avoid runtime computation
+const computedMetadata = {
   title: "Birmingham's Leading Guaranteed Rent Scheme | Property Management West Midlands",
-  description:
-    "Expert letting agents in Birmingham & West Midlands offering guaranteed rent scheme with up to 61% higher returns. Professional property management services across West Midlands.",
+  description: "Expert letting agents in Birmingham & West Midlands offering guaranteed rent scheme with up to 61% higher returns. Professional property management services across West Midlands.",
   keywords: [
     "guaranteed rent birmingham",
     "guaranteed rent scheme birmingham",
@@ -159,23 +163,7 @@ export const metadata = {
   }
 };
 
-// Memoize the intersection observer callback to prevent unnecessary re-renders
-const createIntersectionObserver = () => {
-  if (typeof window === 'undefined') return;
-  
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.target.getAttribute('data-reveal') !== String(entry.isIntersecting)) {
-          entry.target.setAttribute('data-reveal', entry.isIntersecting);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  return observer;
-};
+export const metadata = computedMetadata;
 
 export default function RootLayout({ children }) {
   return (
@@ -195,12 +183,81 @@ export default function RootLayout({ children }) {
         <Script id="intersection-observer" strategy="afterInteractive">
           {`
             (() => {
-              const observer = ${createIntersectionObserver.toString()}();
-              if (observer) {
-                document.addEventListener('DOMContentLoaded', () => {
-                  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-                }, { once: true });
+              let observer = null;
+              let initTimeout = null;
+
+              function createObserver() {
+                if (observer) return observer;
+                
+                observer = new IntersectionObserver(
+                  (entries) => {
+                    requestAnimationFrame(() => {
+                      entries.forEach(entry => {
+                        const currentState = entry.target.getAttribute('data-reveal');
+                        const newState = String(entry.isIntersecting);
+                        if (currentState !== newState) {
+                          entry.target.setAttribute('data-reveal', newState);
+                        }
+                      });
+                    });
+                  },
+                  { threshold: 0.1 }
+                );
+
+                return observer;
               }
+
+              function processElements(elements, startIndex = 0) {
+                const endIndex = Math.min(startIndex + 10, elements.length);
+                const obs = createObserver();
+                
+                for (let i = startIndex; i < endIndex; i++) {
+                  obs.observe(elements[i]);
+                }
+
+                if (endIndex < elements.length) {
+                  requestAnimationFrame(() => {
+                    processElements(elements, endIndex);
+                  });
+                }
+              }
+
+              function init() {
+                if (initTimeout) clearTimeout(initTimeout);
+                
+                initTimeout = setTimeout(() => {
+                  const elements = document.querySelectorAll('[data-reveal]');
+                  if (elements.length) {
+                    processElements(elements);
+                  }
+                }, 100);
+              }
+
+              // Initialize after content is loaded
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init, { once: true });
+              } else {
+                init();
+              }
+
+              // Cleanup on page hide
+              document.addEventListener('visibilitychange', () => {
+                if (document.hidden && initTimeout) {
+                  clearTimeout(initTimeout);
+                }
+              });
+
+              // Cleanup on unmount
+              window.addEventListener('beforeunload', () => {
+                if (observer) {
+                  observer.disconnect();
+                  observer = null;
+                }
+                if (initTimeout) {
+                  clearTimeout(initTimeout);
+                  initTimeout = null;
+                }
+              });
             })();
           `}
         </Script>
