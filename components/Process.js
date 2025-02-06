@@ -196,15 +196,17 @@ export default function Process() {
                                 background: 'linear-gradient(to right, #FFD700, #FFC107)',
                                 left: '50%',
                                 top: '50%',
-                                transform: `rotate(${i * 60}deg) translateX(10px)`,
+                                transform: `rotate(${i * 60}deg) translateX(8px)`,
                                 animationDelay: `${i * 0.1}s`,
-                                boxShadow: '0 0 4px rgba(255, 215, 0, 0.6)'
+                                boxShadow: '0 0 4px rgba(255, 215, 0, 0.6)',
+                                pointerEvents: 'none',
+                                zIndex: 0
                               }}
                             />
                           ))}
 
                           {/* Add radial glow effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 blur-xl rounded-full animate-pulse-slow"></div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 blur-xl rounded-full animate-pulse-slow" style={{ pointerEvents: 'none', zIndex: 0 }}></div>
                         </div>
                       ) : (
                         step.number
@@ -271,58 +273,34 @@ export default function Process() {
                           bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400
                           rounded-lg transform transition-all duration-300 
                           shadow-[0_0_15px_rgba(251,191,36,0.3)]
-                          relative overflow-hidden
+                          relative overflow-hidden isolate
                           border border-amber-300/30
                           ${isMobile ? 'animate-mobile-button' : 'group/button hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300'}
                           ${isMobile ? 'active:scale-95' : 'group-hover/card:scale-105'}
                         `}>
-                          {/* Animated gradient overlay - Different for mobile */}
+                          {/* Animated gradient overlay */}
                           <div className={`
-                            absolute inset-0 
+                            absolute inset-0 -z-10
                             ${isMobile 
                               ? 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-mobile-shine'
                               : 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-[shine_1.5s_ease-in-out_infinite]'
                             }
                           `}></div>
-                          
-                          {/* Pulsing glow effect - Always visible on mobile */}
-                          <div className={`
-                            absolute inset-0 bg-gradient-to-r from-amber-400/0 via-yellow-300/30 to-amber-400/0 blur-xl
-                            ${isMobile ? 'opacity-100 animate-mobile-pulse' : 'opacity-0 group-hover/button:opacity-100 animate-pulse-fast'}
-                          `}></div>
 
                           {/* Button content */}
-                          <span className="text-amber-900 font-bold text-lg relative">
+                          <span className="text-amber-900 font-bold text-lg relative z-10">
                             Calculate Now
                           </span>
                           
-                          {/* Arrow with enhanced animation - Different for mobile */}
+                          {/* Arrow */}
                           <div className={`
-                            relative ml-2 
+                            relative ml-2 z-10
                             ${isMobile ? 'animate-mobile-arrow' : 'group-hover/button:translate-x-1 transition-transform duration-300'}
                           `}>
                             <svg className="w-5 h-5 text-amber-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                           </div>
-
-                          {/* Particle burst - Mobile version */}
-                          {isMobile && (
-                            <div className="absolute inset-0 pointer-events-none">
-                              {[...Array(6)].map((_, i) => (
-                                <div
-                                  key={i}
-                                  className="absolute w-1 h-1 rounded-full bg-yellow-300/80 animate-mobile-particle"
-                                  style={{
-                                    left: '50%',
-                                    top: '50%',
-                                    transform: `rotate(${i * 60}deg) translateX(0)`,
-                                    animationDelay: `${i * 0.3}s`
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          )}
                         </div>
                       </div>
                     )}
@@ -446,17 +424,6 @@ export default function Process() {
           }
         }
 
-        @keyframes mobile-particle {
-          0%, 100% {
-            transform: rotate(var(--rotation)) translateX(10px);
-            opacity: 0;
-          }
-          50% {
-            transform: rotate(var(--rotation)) translateX(20px);
-            opacity: 0.8;
-          }
-        }
-
         @keyframes mobile-arrow {
           0%, 100% {
             transform: translateX(0);
@@ -508,10 +475,6 @@ export default function Process() {
 
         .animate-mobile-arrow {
           animation: mobile-arrow 2s ease-in-out infinite;
-        }
-
-        .animate-mobile-particle {
-          animation: mobile-particle 2s ease-in-out infinite;
         }
 
         .animate-mobile-pulse {
