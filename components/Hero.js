@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 const useOptimizedVideo = () => {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     // Only load video if not on mobile and after initial page load
@@ -11,16 +12,16 @@ const useOptimizedVideo = () => {
       // Delay video load until after critical content
       const timer = setTimeout(() => {
         setShouldLoadVideo(true);
-      }, 1000);
+      }, 100); // Reduced delay for faster loading
       return () => clearTimeout(timer);
     }
   }, []);
 
-  return shouldLoadVideo;
+  return { shouldLoadVideo, isVideoLoaded, setIsVideoLoaded };
 };
 
 export default function Hero() {
-  const shouldLoadVideo = useOptimizedVideo();
+  const { shouldLoadVideo, isVideoLoaded, setIsVideoLoaded } = useOptimizedVideo();
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [backgroundElements, setBackgroundElements] = useState([]);
@@ -89,28 +90,33 @@ export default function Hero() {
       {/* Enhanced Background with Depth */}
       <div className="absolute inset-0 overflow-hidden">
         {shouldLoadVideo && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="none"
-            loading="lazy"
-            className="absolute w-full h-full object-cover scale-105 transform opacity-20"
-            poster="/video-poster.jpg"
-            aria-hidden="true"
-          >
-            <source 
-              src="/background-video.webm" 
-              type="video/webm"
-              media="(min-width: 768px)"
+          <>
+            <div 
+              className={`absolute inset-0 bg-gradient-to-b from-[#0A1930] via-[#1a365d] to-[#0A1930] transition-opacity duration-1000 ${
+                isVideoLoaded ? 'opacity-0' : 'opacity-100'
+              }`}
             />
-            <source 
-              src="/background-video.mp4" 
-              type="video/mp4"
-              media="(min-width: 768px)"
-            />
-          </video>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className={`absolute w-full h-full object-cover scale-105 transform transition-opacity duration-1000 ${
+                isVideoLoaded ? 'opacity-20' : 'opacity-0'
+              }`}
+              onLoadedData={() => setIsVideoLoaded(true)}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                setIsVideoLoaded(false);
+              }}
+            >
+              <source 
+                src="/background-video.mp4" 
+                type="video/mp4"
+                media="(min-width: 768px)"
+              />
+            </video>
+          </>
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A1930]/90 via-[#0A1930]/70 to-[#0A1930]/90"></div>
         
