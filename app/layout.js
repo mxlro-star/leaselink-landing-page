@@ -2,8 +2,15 @@ import '../styles/globals.css';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 
-const ScrollProgress = dynamic(() => import('../components/ScrollProgress'), { ssr: false });
-const BackToTop = dynamic(() => import('../components/BackToTop'), { ssr: false });
+// Dynamically import components to reduce initial DOM size
+const ScrollProgress = dynamic(() => import('../components/ScrollProgress'), { 
+  ssr: false,
+  loading: () => null // Prevent loading placeholder from adding to DOM
+});
+const BackToTop = dynamic(() => import('../components/BackToTop'), { 
+  ssr: false,
+  loading: () => null // Prevent loading placeholder from adding to DOM
+});
 
 // Structured Data as a constant to ensure consistency between server and client
 const structuredData = {
@@ -147,8 +154,27 @@ export const metadata = {
     'geo.placename': 'Birmingham, West Midlands',
     'business:contact_data:locality': 'Birmingham',
     'business:contact_data:region': 'West Midlands',
-    'business:contact_data:country': 'United Kingdom'
+    'business:contact_data:country': 'United Kingdom',
+    'business:contact_data:email': 'hello@letora.co.uk'
   }
+};
+
+// Memoize the intersection observer callback to prevent unnecessary re-renders
+const createIntersectionObserver = () => {
+  if (typeof window === 'undefined') return;
+  
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.target.getAttribute('data-reveal') !== String(entry.isIntersecting)) {
+          entry.target.setAttribute('data-reveal', entry.isIntersecting);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  return observer;
 };
 
 export default function RootLayout({ children }) {
@@ -168,15 +194,14 @@ export default function RootLayout({ children }) {
         <BackToTop />
         <Script id="intersection-observer" strategy="afterInteractive">
           {`
-            document.addEventListener('DOMContentLoaded', () => {
-              const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                  entry.target.setAttribute('data-reveal', entry.isIntersecting)
-                })
-              }, { threshold: 0.1 })
-              
-              document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el))
-            })
+            (() => {
+              const observer = ${createIntersectionObserver.toString()}();
+              if (observer) {
+                document.addEventListener('DOMContentLoaded', () => {
+                  document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+                }, { once: true });
+              }
+            })();
           `}
         </Script>
       </body>
