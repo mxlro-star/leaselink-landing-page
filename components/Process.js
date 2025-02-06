@@ -50,7 +50,7 @@ export default function Process() {
   const steps = [
     {
       number: "1",
-      title: "Get Your Birmingham Property Valuation",
+      title: "Get Your Instant Property Valuation",
       description: "Join leading West Midlands landlords who've discovered their true rental potential. Takes only 30 seconds.",
       icon: "⚡",
       stat: "30 Sec",
@@ -129,25 +129,25 @@ export default function Process() {
                 key={index}
                 className="relative min-h-[24rem] sm:min-h-[26rem]"
               >
-                <div className={`
-                  relative rounded-2xl p-4 sm:p-6 md:p-8 transition-all duration-300
-                  ${activeStep === index ? 'transform scale-[1.02]' : 'hover:scale-[1.01]'}
-                  overflow-hidden backdrop-blur-sm border border-white/10
-                  bg-gradient-to-br ${index === 0 ? 'from-emerald-500/80 to-green-600/80 hover:from-emerald-500/90 hover:to-green-600/90' : 'from-indigo-600/90 to-violet-700/90 hover:from-indigo-600 hover:to-violet-700'}
-                  flex flex-col h-full justify-between
-                  ${index === 0 ? 'cursor-pointer group/card shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30' : 'shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30'}
-                `}>
-                  {/* Step number with animated ring */}
-                  <div className="relative mb-6">
+                {index === 0 ? (
+                  <a href="#contact" className="block">
                     <div className={`
-                      w-14 h-14 rounded-xl 
-                      ${index === 0 ? 'bg-gradient-to-br from-green-300/90 via-emerald-400/90 to-green-500/90 group-hover/card:from-green-300 group-hover/card:via-emerald-400 group-hover/card:to-green-500' : 'bg-gradient-to-br from-violet-300/30 to-indigo-600/30'}
-                      flex items-center justify-center text-2xl font-bold text-white
-                      relative z-10 mx-auto transition-transform duration-300
-                      ${activeStep === index ? 'scale-110' : ''}
+                      relative rounded-2xl p-4 sm:p-6 md:p-8 transition-all duration-300
+                      ${activeStep === index ? 'transform scale-[1.02]' : 'hover:scale-[1.01]'}
+                      overflow-hidden backdrop-blur-sm border border-white/10
+                      bg-gradient-to-br from-emerald-500/80 to-green-600/80 hover:from-emerald-500/90 hover:to-green-600/90
+                      flex flex-col h-full justify-between
+                      cursor-pointer group/card shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30
                     `}>
-                      {index === 0 ? (
-                        <div className="relative">
+                      {/* Step number with animated ring */}
+                      <div className="relative mb-6">
+                        <div className={`
+                          w-14 h-14 rounded-xl 
+                          bg-gradient-to-br from-green-300/90 via-emerald-400/90 to-green-500/90 group-hover/card:from-green-300 group-hover/card:via-emerald-400 group-hover/card:to-green-500
+                          flex items-center justify-center text-2xl font-bold text-white
+                          relative z-10 mx-auto transition-transform duration-300
+                          ${activeStep === index ? 'scale-110' : ''}
+                        `}>
                           {/* Main flash icon */}
                           <svg className="w-8 h-8 transform transition-all duration-300 group-hover/card:scale-110" 
                             viewBox="0 0 24 24" 
@@ -209,137 +209,277 @@ export default function Process() {
                           {/* Add radial glow effect */}
                           <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 blur-xl rounded-full animate-pulse-slow" style={{ pointerEvents: 'none', zIndex: 0 }}></div>
                         </div>
-                      ) : (
-                        step.number
+                      </div>
+
+                      {/* Remove the duplicate icon section for first card */}
+                      {index !== 0 && (
+                        <div className="text-3xl mb-4 text-center">
+                          <span className={`inline-block transition-transform duration-300 
+                            ${activeStep === index ? 'scale-125' : ''}
+                          `}>
+                            {step.icon}
+                          </span>
+                        </div>
                       )}
-                      <div className={`
-                        absolute inset-0 rounded-xl border border-white/30
-                        transition-transform duration-500
-                        ${activeStep === index ? 'scale-150 opacity-0' : 'scale-100 opacity-100'}
-                      `} />
-                    </div>
-                  </div>
 
-                  {/* Remove the duplicate icon section for first card */}
-                  {index !== 0 && (
-                    <div className="text-3xl mb-4 text-center">
-                      <span className={`inline-block transition-transform duration-300 
-                        ${activeStep === index ? 'scale-125' : ''}
-                      `}>
-                        {step.icon}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Content */}
-                  <div className="flex-grow">
-                    <h3 className={`text-xl md:text-2xl font-semibold mb-3 text-white text-center
-                      ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
-                    `}>
-                      {step.title}
-                    </h3>
-                    <p className={`mb-4 text-center text-sm md:text-base
-                      ${index === 0 ? 'text-blue-100/80' : 'text-violet-100/90'}
-                    `}>
-                      {step.description}
-                    </p>
-                    
-                    {/* Update metrics panel for first card */}
-                    {index === 0 && (
-                      <div className="grid grid-cols-2 gap-4 mb-4 p-3 rounded-lg bg-emerald-900/20 border border-emerald-400/20">
-                        <div className="text-center">
-                          <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
-                            {propertiesValued}
+                      {/* Content */}
+                      <div className="flex-grow">
+                        <h3 className={`text-xl md:text-2xl font-semibold mb-3 text-white text-center
+                          ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
+                        `}>
+                          {step.title}
+                        </h3>
+                        <p className={`mb-4 text-center text-sm md:text-base
+                          ${index === 0 ? 'text-blue-100/80' : 'text-violet-100/90'}
+                        `}>
+                          {step.description}
+                        </p>
+                        
+                        {/* Update metrics panel for first card */}
+                        {index === 0 && (
+                          <div className="grid grid-cols-2 gap-4 mb-4 p-3 rounded-lg bg-emerald-900/20 border border-emerald-400/20">
+                            <div className="text-center">
+                              <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
+                                {propertiesValued}
+                              </div>
+                              <div className="text-xs text-emerald-200/90">
+                                Properties Valued
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
+                                110%
+                              </div>
+                              <div className="text-xs text-emerald-200/90">
+                                vs National Average
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-xs text-emerald-200/90">
-                            Properties Valued
+                        )}
+
+                        {/* Update CTA button for first card */}
+                        {index === 0 && (
+                          <div className="mt-4 text-center">
+                            <div className={`
+                              inline-flex items-center justify-center px-6 py-3 
+                              bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400
+                              rounded-lg transform transition-all duration-300 
+                              shadow-[0_0_15px_rgba(251,191,36,0.3)]
+                              relative overflow-hidden isolate
+                              border border-amber-300/30
+                              ${isMobile ? 'animate-mobile-button' : 'group/button hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300'}
+                              ${isMobile ? 'active:scale-95' : 'group-hover/card:scale-105'}
+                            `}>
+                              {/* Animated gradient overlay */}
+                              <div className={`
+                                absolute inset-0 -z-10
+                                ${isMobile 
+                                  ? 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-mobile-shine'
+                                  : 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-[shine_1.5s_ease-in-out_infinite]'
+                                }
+                              `}></div>
+
+                              {/* Button content */}
+                              <span className="text-amber-900 font-bold text-lg relative z-10">
+                                Calculate Now
+                              </span>
+                              
+                              {/* Arrow */}
+                              <div className={`
+                                relative ml-2 z-10
+                                ${isMobile ? 'animate-mobile-arrow' : 'group-hover/button:translate-x-1 transition-transform duration-300'}
+                              `}>
+                                <svg className="w-5 h-5 text-amber-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Stats and Highlight */}
+                      <div className={`
+                        flex items-center justify-between mt-4 pt-4 border-t
+                        ${index === 0 ? 'border-emerald-400/20' : 'border-violet-400/20'}
+                      `}>
+                        <div className="text-center flex-1">
+                          <div className={`text-lg font-semibold text-white
+                            ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
+                          `}>
+                            {step.stat}
                           </div>
                         </div>
-                        <div className="text-center">
-                          <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
-                            110%
-                          </div>
-                          <div className="text-xs text-emerald-200/90">
-                            vs National Average
+                        <div className={`h-8 w-px bg-gradient-to-b from-transparent ${index === 0 ? 'via-emerald-400/20' : 'via-violet-400/30'} to-transparent`} />
+                        <div className="text-center flex-1">
+                          <div className={`text-sm
+                            ${index === 0 ? 'text-emerald-200/90 group-hover/card:text-white' : 'text-violet-200/90 group-hover:text-white'}
+                          `}>
+                            {step.highlight}
                           </div>
                         </div>
                       </div>
-                    )}
 
-                    {/* Update CTA button for first card */}
-                    {index === 0 && (
-                      <div className="mt-4 text-center">
-                        <div className={`
-                          inline-flex items-center justify-center px-6 py-3 
-                          bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400
-                          rounded-lg transform transition-all duration-300 
-                          shadow-[0_0_15px_rgba(251,191,36,0.3)]
-                          relative overflow-hidden isolate
-                          border border-amber-300/30
-                          ${isMobile ? 'animate-mobile-button' : 'group/button hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300'}
-                          ${isMobile ? 'active:scale-95' : 'group-hover/card:scale-105'}
-                        `}>
-                          {/* Animated gradient overlay */}
-                          <div className={`
-                            absolute inset-0 -z-10
-                            ${isMobile 
-                              ? 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-mobile-shine'
-                              : 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-[shine_1.5s_ease-in-out_infinite]'
-                            }
-                          `}></div>
-
-                          {/* Button content */}
-                          <span className="text-amber-900 font-bold text-lg relative z-10">
-                            Calculate Now
-                          </span>
-                          
-                          {/* Arrow */}
-                          <div className={`
-                            relative ml-2 z-10
-                            ${isMobile ? 'animate-mobile-arrow' : 'group-hover/button:translate-x-1 transition-transform duration-300'}
-                          `}>
-                            <svg className="w-5 h-5 text-amber-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      {/* Add pulsing arrow for first card */}
+                      {index === 0 && (
+                        <div className="absolute -right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                          <div className="animate-pulse">
+                            <svg className="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           </div>
                         </div>
+                      )}
+                    </div>
+                  </a>
+                ) : (
+                  <div className={`
+                    relative rounded-2xl p-4 sm:p-6 md:p-8 transition-all duration-300
+                    ${activeStep === index ? 'transform scale-[1.02]' : 'hover:scale-[1.01]'}
+                    overflow-hidden backdrop-blur-sm border border-white/10
+                    bg-gradient-to-br from-indigo-600/90 to-violet-700/90 hover:from-indigo-600 hover:to-violet-700
+                    flex flex-col h-full justify-between
+                    shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30
+                  `}>
+                    {/* Step number with animated ring */}
+                    <div className="relative mb-6">
+                      <div className={`
+                        w-14 h-14 rounded-xl 
+                        bg-gradient-to-br from-violet-300/30 to-indigo-600/30
+                        flex items-center justify-center text-2xl font-bold text-white
+                        relative z-10 mx-auto transition-transform duration-300
+                        ${activeStep === index ? 'scale-110' : ''}
+                      `}>
+                        {step.number}
+                        <div className={`
+                          absolute inset-0 rounded-xl border border-white/30
+                          transition-transform duration-500
+                          ${activeStep === index ? 'scale-150 opacity-0' : 'scale-100 opacity-100'}
+                        `} />
+                      </div>
+                    </div>
+
+                    {/* Remove the duplicate icon section for first card */}
+                    {index !== 0 && (
+                      <div className="text-3xl mb-4 text-center">
+                        <span className={`inline-block transition-transform duration-300 
+                          ${activeStep === index ? 'scale-125' : ''}
+                        `}>
+                          {step.icon}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Content */}
+                    <div className="flex-grow">
+                      <h3 className={`text-xl md:text-2xl font-semibold mb-3 text-white text-center
+                        ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
+                      `}>
+                        {step.title}
+                      </h3>
+                      <p className={`mb-4 text-center text-sm md:text-base
+                        ${index === 0 ? 'text-blue-100/80' : 'text-violet-100/90'}
+                      `}>
+                        {step.description}
+                      </p>
+                      
+                      {/* Update metrics panel for first card */}
+                      {index === 0 && (
+                        <div className="grid grid-cols-2 gap-4 mb-4 p-3 rounded-lg bg-emerald-900/20 border border-emerald-400/20">
+                          <div className="text-center">
+                            <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
+                              {propertiesValued}
+                            </div>
+                            <div className="text-xs text-emerald-200/90">
+                              Properties Valued
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-xl font-bold text-white group-hover/card:text-emerald-200">
+                              110%
+                            </div>
+                            <div className="text-xs text-emerald-200/90">
+                              vs National Average
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Update CTA button for first card */}
+                      {index === 0 && (
+                        <div className="mt-4 text-center">
+                          <div className={`
+                            inline-flex items-center justify-center px-6 py-3 
+                            bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400
+                            rounded-lg transform transition-all duration-300 
+                            shadow-[0_0_15px_rgba(251,191,36,0.3)]
+                            relative overflow-hidden isolate
+                            border border-amber-300/30
+                            ${isMobile ? 'animate-mobile-button' : 'group/button hover:from-amber-300 hover:via-yellow-300 hover:to-amber-300'}
+                            ${isMobile ? 'active:scale-95' : 'group-hover/card:scale-105'}
+                          `}>
+                            {/* Animated gradient overlay */}
+                            <div className={`
+                              absolute inset-0 -z-10
+                              ${isMobile 
+                                ? 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-mobile-shine'
+                                : 'bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.6)_40%,transparent_60%)] animate-[shine_1.5s_ease-in-out_infinite]'
+                              }
+                            `}></div>
+
+                            {/* Button content */}
+                            <span className="text-amber-900 font-bold text-lg relative z-10">
+                              Calculate Now
+                            </span>
+                            
+                            {/* Arrow */}
+                            <div className={`
+                              relative ml-2 z-10
+                              ${isMobile ? 'animate-mobile-arrow' : 'group-hover/button:translate-x-1 transition-transform duration-300'}
+                            `}>
+                              <svg className="w-5 h-5 text-amber-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Stats and Highlight */}
+                    <div className={`
+                      flex items-center justify-between mt-4 pt-4 border-t
+                      ${index === 0 ? 'border-emerald-400/20' : 'border-violet-400/20'}
+                    `}>
+                      <div className="text-center flex-1">
+                        <div className={`text-lg font-semibold text-white
+                          ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
+                        `}>
+                          {step.stat}
+                        </div>
+                      </div>
+                      <div className={`h-8 w-px bg-gradient-to-b from-transparent ${index === 0 ? 'via-emerald-400/20' : 'via-violet-400/30'} to-transparent`} />
+                      <div className="text-center flex-1">
+                        <div className={`text-sm
+                          ${index === 0 ? 'text-emerald-200/90 group-hover/card:text-white' : 'text-violet-200/90 group-hover:text-white'}
+                        `}>
+                          {step.highlight}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Add pulsing arrow for first card */}
+                    {index === 0 && (
+                      <div className="absolute -right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                        <div className="animate-pulse">
+                          <svg className="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
                       </div>
                     )}
                   </div>
-
-                  {/* Stats and Highlight */}
-                  <div className={`
-                    flex items-center justify-between mt-4 pt-4 border-t
-                    ${index === 0 ? 'border-emerald-400/20' : 'border-violet-400/20'}
-                  `}>
-                    <div className="text-center flex-1">
-                      <div className={`text-lg font-semibold text-white
-                        ${index === 0 ? 'group-hover/card:text-emerald-200' : 'group-hover:text-violet-100'}
-                      `}>
-                        {step.stat}
-                      </div>
-                    </div>
-                    <div className={`h-8 w-px bg-gradient-to-b from-transparent ${index === 0 ? 'via-emerald-400/20' : 'via-violet-400/30'} to-transparent`} />
-                    <div className="text-center flex-1">
-                      <div className={`text-sm
-                        ${index === 0 ? 'text-emerald-200/90 group-hover/card:text-white' : 'text-violet-200/90 group-hover:text-white'}
-                      `}>
-                        {step.highlight}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Add pulsing arrow for first card */}
-                  {index === 0 && (
-                    <div className="absolute -right-2 top-1/2 transform -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
-                      <div className="animate-pulse">
-                        <svg className="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
             ))}
           </div>
