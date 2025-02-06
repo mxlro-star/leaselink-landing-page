@@ -348,7 +348,7 @@ export default function Benefits() {
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500 group-hover:text-emerald-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  <span className="text-gray-900 group-hover:text-white font-semibold transition-colors duration-300">Get Your Property Value Now</span>
+                  <span className="text-gray-900 group-hover:text-white font-semibold transition-colors duration-300">Get Your Rental Valuation Now</span>
                 </span>
                 <span className="pl-6 text-blue-600 group-hover:text-blue-100 transition-colors duration-300 flex items-center gap-2">
                   Free

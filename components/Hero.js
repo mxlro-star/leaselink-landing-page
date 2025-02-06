@@ -221,7 +221,7 @@ export default function Hero() {
                   </a>
                 </div>
 
-                <a
+                {/* <a
                   href="#book-call"
                   className="inline-flex items-center justify-center px-8 py-4 text-lg text-blue-100 hover:text-white border border-blue-200/30 rounded-lg transform transition-all duration-300 hover:scale-105 hover:border-blue-200/50 backdrop-blur-sm"
                 >
@@ -229,7 +229,7 @@ export default function Hero() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   Book Consultation
-                </a>
+                </a> */}
               </div>
 
               {/* Trust Indicators */}
