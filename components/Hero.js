@@ -97,7 +97,7 @@ export default function Hero() {
             preload="none"
             loading="lazy"
             className="absolute w-full h-full object-cover scale-105 transform opacity-20"
-            poster="/video-poster.webp"
+            poster="/video-poster.jpg"
             aria-hidden="true"
           >
             <source 
