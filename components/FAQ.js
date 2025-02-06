@@ -11,34 +11,34 @@ export default function FAQ() {
 
   const faqs = [
     {
-      question: "What is a Company Let?",
-      answer: "A Company Let is a rental agreement where a company, rather than an individual, becomes your tenant. The company pays rent directly to you, guaranteeing consistent income regardless of occupancy, while managing all property-related responsibilities.",
-      category: "Basics"
+      question: "What is a Guaranteed Rent Scheme in Birmingham?",
+      answer: "Our Birmingham guaranteed rent scheme ensures landlords receive guaranteed monthly payments through a company let arrangement. As one of Birmingham's leading letting agents, we handle all property management responsibilities while providing consistent income regardless of occupancy.",
+      category: "Guaranteed Rent"
     },
     {
-      question: "How is my rental income guaranteed?",
-      answer: "Your rental income is secured through legally binding contracts with established companies. We ensure timely payments through robust financial agreements and maintain substantial deposits as additional security.",
-      category: "Payments"
+      question: "How does property management work in the West Midlands?",
+      answer: "Our West Midlands property management service covers everything from maintenance to tenant relations. As experienced letting agents in Birmingham and the West Midlands, we provide comprehensive property management solutions, ensuring your property is well-maintained and professionally managed.",
+      category: "Property Management"
     },
     {
-      question: "What happens if there are property issues?",
-      answer: "The company tenant takes full responsibility for property maintenance, repairs, and tenant management. They handle all issues promptly and professionally, saving you time and money.",
-      category: "Management"
+      question: "What makes LETORA different from other Birmingham letting agents?",
+      answer: "Unlike traditional Birmingham letting agents, we offer a unique guaranteed rent scheme with corporate-backed contracts. We're one of the few property management companies in Birmingham providing guaranteed monthly payments, professional property management, and long-term lease security.",
+      category: "Services"
     },
     {
-      question: "How long are the lease terms?",
-      answer: "We offer flexible lease terms ranging from 3 to 10 years, allowing you to choose the commitment length that best suits your needs. Longer terms often come with enhanced benefits and guaranteed rent increases.",
+      question: "What areas do you cover in the West Midlands?",
+      answer: "Our property management services cover Birmingham and the wider West Midlands area. As established West Midlands letting agents, we manage properties across Birmingham, Solihull, Wolverhampton, and surrounding areas, offering the same guaranteed rent scheme throughout the region.",
+      category: "Coverage"
+    },
+    {
+      question: "How long are your guaranteed rent contracts in Birmingham?",
+      answer: "Our Birmingham guaranteed rent scheme offers flexible contracts from 3 to 10 years. As experienced property management specialists in the West Midlands, we provide long-term security with guaranteed rent increases built into the agreement.",
       category: "Contracts"
     },
     {
-      question: "Can I sell my property during the lease?",
-      answer: "Yes, you can sell your property while under a company lease. The lease can either be transferred to the new owner as an asset or terminated according to agreed-upon terms in the contract.",
-      category: "Flexibility"
-    },
-    {
-      question: "What types of properties do you accept?",
-      answer: "We accept a wide range of residential properties, including apartments, houses, and HMOs. Properties should meet basic safety and habitability standards, and we'll guide you through any necessary improvements.",
-      category: "Eligibility"
+      question: "What types of properties do you manage in Birmingham and West Midlands?",
+      answer: "We manage a diverse portfolio of properties across Birmingham and the West Midlands, including residential apartments, houses, and HMOs. Our guaranteed rent scheme is available to property owners throughout the West Midlands, subject to our quality standards.",
+      category: "Properties"
     }
   ];
 
@@ -67,10 +67,10 @@ export default function FAQ() {
       <div className="relative container mx-auto px-4 z-10">
         <div className="text-center mb-12 md:mb-20">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
-            Frequently Asked Questions
+            Frequently Asked Questions About Guaranteed Rent in Birmingham
           </h2>
           <p className="text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto">
-            Everything you need to know about our <span className="text-white font-semibold">Company Lease service</span>
+            Everything you need to know about our <span className="text-white font-semibold">Birmingham Property Management</span> and <span className="text-white font-semibold">West Midlands Guaranteed Rent Scheme</span>
           </p>
         </div>
 
@@ -142,15 +142,55 @@ export default function FAQ() {
         {/* Additional Support Section */}
         <div className="mt-12 md:mt-20 text-center">
           <p className="text-blue-100/90 mb-6">
-            Still have questions? We're here to help!
+            Have more questions about property management in Birmingham and the West Midlands? Our local team is here to help!
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-300">
-              Contact Support
-            </button>
-            <button className="px-8 py-3 rounded-xl border border-blue-400/30 text-white font-semibold hover:bg-blue-400/10 transition-all duration-300">
-              Schedule a Call
-            </button>
+            <a
+              href="https://wa.me/447947764486"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-0.5"
+            >
+              {/* Background glow effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/0 via-white/25 to-emerald-500/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
+              
+              {/* WhatsApp Icon with enhanced animation */}
+              <div className="relative flex items-center justify-center w-6 h-6 transition-transform duration-300 group-hover:scale-110">
+                <svg 
+                  className="w-full h-full text-white" 
+                  fill="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                {/* Pulse effect */}
+                <div className="absolute inset-0 rounded-full border-2 border-white/50 scale-0 opacity-0 group-hover:scale-150 group-hover:opacity-0 transition-all duration-500" />
+              </div>
+
+              {/* Text content with responsive design */}
+              <div className="relative flex items-center gap-2">
+                <span className="md:hidden">WhatsApp Us</span>
+                <span className="hidden md:inline">WhatsApp Us on</span>
+                <span className="hidden md:inline font-mono bg-emerald-600/50 px-2 py-0.5 rounded select-all">
+                  +44 7947 764486
+                </span>
+              </div>
+
+              {/* Arrow with enhanced animation */}
+              <svg 
+                className="relative w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+
+              {/* Shine effect */}
+              <div className="absolute inset-0 rounded-xl overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              </div>
+            </a>
           </div>
         </div>
       </div>
