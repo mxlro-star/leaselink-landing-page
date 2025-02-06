@@ -50,8 +50,8 @@ export default function Process() {
   const steps = [
     {
       number: "1",
-      title: "Get Your Instant Valuation",
-      description: "Join 1000+ landlords who've discovered their true rental potential. Takes only 30 seconds.",
+      title: "Get Your Birmingham Property Valuation",
+      description: "Join leading West Midlands landlords who've discovered their true rental potential. Takes only 30 seconds.",
       icon: "⚡",
       stat: "30 Sec",
       highlight: "Free Analysis",
@@ -61,16 +61,16 @@ export default function Process() {
     },
     {
       number: "2",
-      title: "Get Matched",
-      description: "We identify the best company lease tenant tailored to buy-to-let investors, portfolio, and accidental landlords.",
+      title: "Expert Local Matching",
+      description: "Our Birmingham property management team identifies the ideal corporate tenant for buy-to-let investors and portfolio landlords.",
       icon: "🤝",
       stat: "24h Response",
       highlight: "Perfect Match"
     },
     {
       number: "3",
-      title: "Sign Agreement",
-      description: "Secure a legally binding contract with our pre-designed templates to protect your interests.",
+      title: "Secure Agreement",
+      description: "Get a legally-binding guaranteed rent contract, tailored for Birmingham and West Midlands properties.",
       icon: "✍️",
       stat: "100% Secure",
       highlight: "Protected"
@@ -78,7 +78,7 @@ export default function Process() {
     {
       number: "4",
       title: "Start Earning",
-      description: "Receive guaranteed monthly payments with a hassle-free, streamlined process.",
+      description: "Join Birmingham's leading guaranteed rent scheme with hassle-free, guaranteed monthly payments.",
       icon: "💰",
       stat: "Day 1",
       highlight: "Guaranteed"
@@ -110,10 +110,11 @@ export default function Process() {
       <div className="relative container mx-auto px-4 z-10">
         <div className="text-center mb-12 md:mb-20">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
-            How It Works
+            Birmingham's Leading Guaranteed Rent Scheme
           </h2>
           <p className="text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto">
-            Your journey to hassle-free property management in{" "}
+            Your journey to hassle-free property management in the{" "}
+            <span className="text-white font-semibold">West Midlands</span> in{" "}
             <span className="text-white font-semibold">4 simple steps</span>
           </p>
         </div>

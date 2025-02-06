@@ -30,21 +30,21 @@ export default function Hero() {
   // Conversion-focused testimonials
   const testimonials = [
     {
-      quote: "£2,450 guaranteed monthly income, no hassle, no void periods.",
+      quote: "£2,450 guaranteed monthly income through Birmingham's leading rent guarantee scheme.",
       author: "James Wilson",
-      role: "London Landlord",
+      role: "Birmingham Landlord",
       property: "2-Bed Apartment",
       increase: "+35%"
     },
     {
-      quote: "From £1,800 to £2,900 per month with zero management stress.",
+      quote: "From £1,800 to £2,900 per month with professional property management in West Midlands.",
       author: "Sarah Ahmed",
       role: "Property Investor",
       property: "3-Bed House",
       increase: "+61%"
     },
     {
-      quote: "My portfolio income increased by £37,000 annually.",
+      quote: "My Birmingham property portfolio income increased by £37,000 annually.",
       author: "David Thompson",
       role: "Portfolio Owner",
       property: "Multiple Properties",
@@ -193,14 +193,14 @@ export default function Hero() {
 
               {/* Main Value Proposition */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-                <span className="block text-white">Transform Your Property</span>
+                <span className="block text-white">West Midlands' Leading</span>
                 <span className="block mt-2 bg-gradient-to-r from-emerald-300 via-blue-200 to-purple-300 bg-clip-text text-transparent">
-                  Into Guaranteed Income
+                  Guaranteed Rent Scheme
                 </span>
               </h1>
 
               <p className="text-xl sm:text-2xl text-blue-100/90 mb-8 max-w-2xl mx-auto lg:mx-0">
-                Join landlords earning up to <span className="text-white font-semibold">61% more</span> with a company let. Zero hassle, zero void periods.
+                Transforming property management across <span className="text-white font-semibold">Birmingham</span> and the <span className="text-white font-semibold">West Midlands</span>. Join landlords earning up to <span className="text-white font-semibold">61% more</span> with zero hassle.
               </p>
 
               {/* Primary CTA */}
@@ -244,19 +244,19 @@ export default function Hero() {
                   <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>30-Second Valuation</span>
+                  <span>Trusted Property Management</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>No Obligation</span>
+                  <span>Full Regional Coverage</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Instant Results</span>
+                  <span>Guaranteed Income</span>
                 </div>
               </div>
             </div>

@@ -26,62 +26,62 @@ export default function Benefits() {
   const benefits = [
     {
       icon: "💰",
-      title: "Guaranteed Monthly Income",
-      highlight: "Get paid on time, every time - even if your property is empty",
+      title: "Guaranteed Rent in Birmingham",
+      highlight: "Get paid on time, every time - Birmingham's most trusted rent guarantee scheme",
       stat: "100%",
       statLabel: "Payment Guarantee",
       gradient: "from-emerald-400 via-teal-300 to-cyan-400",
       glowColor: "emerald-400/40",
       iconGradient: "from-emerald-300 via-teal-200 to-cyan-300",
       testimonial: {
-        quote: "Haven't missed a payment in 2 years. It's completely hands-off.",
+        quote: "Haven't missed a payment in 2 years with Birmingham's best letting agents.",
         author: "Sarah M.",
-        role: "London Landlord"
+        role: "Birmingham Landlord"
       }
     },
     {
       icon: "🏠",
-      title: "Zero Management Hassle",
-      highlight: "We handle everything: maintenance, tenants, paperwork - you just collect rent",
+      title: "Professional Property Management",
+      highlight: "West Midlands' leading property management service - we handle everything",
       stat: "95%",
       statLabel: "Time Saved",
       gradient: "from-blue-400 via-indigo-300 to-violet-400",
       glowColor: "blue-400/40",
       iconGradient: "from-blue-300 via-indigo-200 to-violet-300",
       testimonial: {
-        quote: "No more 3am maintenance calls. Letora handles everything.",
+        quote: "The best property management company in Birmingham, bar none.",
         author: "James W.",
-        role: "Portfolio Owner"
+        role: "West Midlands Investor"
       }
     },
     {
       icon: "📋",
-      title: "3-10 Year Guaranteed Contracts",
-      highlight: "Lock in long-term income with corporate-backed lease agreements",
+      title: "Long-Term Guaranteed Contracts",
+      highlight: "Birmingham's most secure corporate-backed lease agreements",
       stat: "10yr",
       statLabel: "Max Contract Length",
       gradient: "from-violet-400 via-purple-300 to-fuchsia-400",
       glowColor: "violet-400/40",
       iconGradient: "from-violet-300 via-purple-200 to-fuchsia-300",
       testimonial: {
-        quote: "The 5-year contract gives me peace of mind I never had before.",
+        quote: "The most reliable guaranteed rent scheme in the West Midlands.",
         author: "David T.",
-        role: "Buy-to-Let Investor"
+        role: "Birmingham Investor"
       }
     },
     {
       icon: "💎",
       title: "Premium Property Care",
-      highlight: "Professional maintenance & regular inspections protect your investment",
+      highlight: "Expert property management across Birmingham and West Midlands",
       stat: "98%",
       statLabel: "Client Satisfaction",
       gradient: "from-rose-400 via-pink-300 to-red-400",
       glowColor: "rose-400/40",
       iconGradient: "from-rose-300 via-pink-200 to-red-300",
       testimonial: {
-        quote: "My property is in better condition now than when I started.",
+        quote: "The finest property management service in Birmingham.",
         author: "Emma P.",
-        role: "Property Owner"
+        role: "West Midlands Landlord"
       }
     }
   ];
@@ -163,16 +163,16 @@ export default function Benefits() {
         {/* Enhanced Header Section */}
         <div className="text-center mb-12 max-w-4xl mx-auto">
           <div className="inline-flex items-center justify-center px-4 py-1.5 mb-6 rounded-full bg-gradient-to-r from-blue-500/10 to-indigo-500/10 border border-blue-200/10 backdrop-blur-sm">
-            <span className="text-sm sm:text-base text-blue-200 font-medium">Trusted by Property Investors Across the UK</span>
+            <span className="text-sm sm:text-base text-blue-200 font-medium">Birmingham's Most Trusted Property Management Company</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-tight">
-            Transform Your Property Investment Into A
+            Transform Your Birmingham Property Into A
             <span className="block mt-2 bg-gradient-to-r from-emerald-300 via-blue-200 to-purple-300 bg-clip-text text-transparent">
-              Guaranteed Monthly Income Stream
+              Guaranteed Monthly Income
             </span>
           </h2>
           <p className="text-lg md:text-xl text-blue-100/90 mb-8">
-            Join forward-thinking landlords who've discovered the <span className="text-white font-semibold">smarter way</span> to manage their properties
+            Join West Midlands' forward-thinking landlords who've discovered the <span className="text-white font-semibold">smarter way</span> to manage their properties
           </p>
           
           {/* Quick Stats Bar - Revised to use non-numerical achievements */}
