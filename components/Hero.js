@@ -1,7 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
 
+const useOptimizedVideo = () => {
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    // Only load video if not on mobile and after initial page load
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) {
+      // Delay video load until after critical content
+      const timer = setTimeout(() => {
+        setShouldLoadVideo(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  return shouldLoadVideo;
+};
+
 export default function Hero() {
+  const shouldLoadVideo = useOptimizedVideo();
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [backgroundElements, setBackgroundElements] = useState([]);
@@ -69,16 +88,30 @@ export default function Hero() {
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0A1930] via-[#1a365d] to-[#0A1930]">
       {/* Enhanced Background with Depth */}
       <div className="absolute inset-0 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute w-full h-full object-cover scale-105 transform opacity-20"
-          poster="/video-poster.jpg"
-        >
-          <source src="/background-video.mp4" type="video/mp4" />
-        </video>
+        {shouldLoadVideo && (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="none"
+            loading="lazy"
+            className="absolute w-full h-full object-cover scale-105 transform opacity-20"
+            poster="/video-poster.webp"
+            aria-hidden="true"
+          >
+            <source 
+              src="/background-video.webm" 
+              type="video/webm"
+              media="(min-width: 768px)"
+            />
+            <source 
+              src="/background-video.mp4" 
+              type="video/mp4"
+              media="(min-width: 768px)"
+            />
+          </video>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A1930]/90 via-[#0A1930]/70 to-[#0A1930]/90"></div>
         
         {/* Dynamic Background Elements */}
@@ -306,12 +339,12 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator - Adjusted positioning */}
-      <div className="absolute bottom-2 left-0 right-0 flex flex-col items-center animate-bounce">
+      {/* <div className="absolute bottom-2 left-0 right-0 flex flex-col items-center animate-bounce">
         <span className="text-blue-200/70 text-sm mb-2">Scroll to explore</span>
         <svg className="w-6 h-6 text-blue-200/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div>
+      </div> */}
 
       <style jsx>{`
         @keyframes float {
