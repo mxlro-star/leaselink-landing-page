@@ -249,97 +249,87 @@ export default function ContactForm() {
 
   const handleBookConsultation = async () => {
     try {
-      // First scroll to the form to ensure loading state is visible
-      if (contactFormRef.current) {
-        const yOffset = window.innerWidth < 640 ? -20 : -50;
-        const element = contactFormRef.current;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth'
-        });
+      // Ensure viewport stays focused on contact section
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
 
-      // Short delay to ensure scroll is complete before showing loading state
-      setTimeout(async () => {
-        setIsLoading(true);
-        setBookingError(null);
-        setGameStep('booking');
+      setIsLoading(true);
+      setBookingError(null);
+      setGameStep('booking');
 
-        // Validate email
-        if (!isValidEmail(bookingEmail)) {
-          setEmailError('Please enter a valid email address');
-          setIsLoading(false);
-          setGameStep('calendar');
-          return;
+      // Validate email
+      if (!isValidEmail(bookingEmail)) {
+        setEmailError('Please enter a valid email address');
+        setIsLoading(false);
+        setGameStep('calendar');
+        return;
+      }
+
+      // Validate phone
+      if (!isValidUKPhone(bookingPhone)) {
+        setPhoneError('Please enter a valid UK phone number');
+        setIsLoading(false);
+        setGameStep('calendar');
+        return;
+      }
+
+      try {
+        // Book the consultation
+        const response = await fetch('/api/calendar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            dateTime: selectedSlot,
+            propertyDetails: {
+              postcode: formData.postcode,
+              bedrooms: formData.bedrooms,
+              fullBathrooms: formData.fullBathrooms,
+              hasReceptionRoom: formData.hasReceptionRoom,
+              estimatedValue: calculatedAmount
+            }
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to book consultation');
         }
 
-        // Validate phone
-        if (!isValidUKPhone(bookingPhone)) {
-          setPhoneError('Please enter a valid UK phone number');
-          setIsLoading(false);
-          setGameStep('calendar');
-          return;
+        // Send confirmation email
+        const emailResponse = await fetch('/api/email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: bookingEmail,
+            bookingDateTime: selectedSlot
+          }),
+        });
+
+        if (!emailResponse.ok) {
+          console.error('Failed to send confirmation email');
         }
 
-        try {
-          // Book the consultation
-          const bookingResponse = await fetch('/api/calendar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              dateTime: selectedSlot,
-              propertyDetails: {
-                postcode: formData.postcode,
-                bedrooms: formData.bedrooms,
-                fullBathrooms: formData.fullBathrooms,
-                hasReceptionRoom: formData.hasReceptionRoom,
-                estimatedValue: calculatedAmount
-              }
-            })
-          });
+        setGameStep('booked');
+        window.confetti?.();
 
-          if (!bookingResponse.ok) {
-            throw new Error('Failed to book consultation');
+        // Ensure viewport is still focused on contact section after success
+        setTimeout(() => {
+          if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
-
-          // Send confirmation email
-          const emailResponse = await fetch('/api/email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email: bookingEmail,
-              bookingDateTime: selectedSlot
-            })
-          });
-
-          if (!emailResponse.ok) {
-            console.error('Failed to send confirmation email');
-          }
-
-          setGameStep('booked');
-          window.confetti?.();
-
-          // Scroll to the contact form section with offset after success
-          if (contactFormRef.current) {
-            const yOffset = window.innerWidth < 640 ? -20 : -50;
-            const element = contactFormRef.current;
-            const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            
-            window.scrollTo({
-              top: y,
-              behavior: 'smooth'
-            });
-          }
-        } catch (error) {
-          console.error('Error booking consultation:', error);
-          setBookingError('Failed to book consultation. Please try again.');
-          setGameStep('calendar');
-        } finally {
-          setIsLoading(false);
-        }
-      }, 100);
+        }, 100);
+      } catch (error) {
+        console.error('Error booking consultation:', error);
+        setBookingError('Failed to book consultation. Please try again.');
+        setGameStep('calendar');
+      } finally {
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error('Error in handleBookConsultation:', error);
       setBookingError('An unexpected error occurred. Please try again.');
@@ -1029,8 +1019,8 @@ export default function ContactForm() {
                     </span>
                     {selectedSlot && (
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-shine" />
-              )}
-            </button>
+                    )}
+                  </button>
 
                   <button
                     onClick={() => {
@@ -1042,7 +1032,7 @@ export default function ContactForm() {
                   >
                     Go Back
                   </button>
-              </div>
+                </div>
               </>
             )}
           </div>
