@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true
+    scrollRestoration: false
   },
   // Ensure we're using the App Router
   useFileSystemPublicRoutes: true,

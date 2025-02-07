@@ -67,34 +67,18 @@ export default function ContactForm() {
 
   // Add useEffect for scroll restoration
   useEffect(() => {
-    // Only handle hash changes after initial load
-    let isInitialLoad = true;
-
-    const handleHashChange = () => {
-      if (isInitialLoad) {
-        isInitialLoad = false;
-        return;
-      }
-
-      if (window.location.hash === '#contact' && contactFormRef.current) {
-        const yOffset = window.innerWidth < 640 ? -20 : -50;
-        const element = contactFormRef.current;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth'
-        });
-      }
-    };
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-    };
+    // Check if the URL hash is #contact
+    if (window.location.hash === '#contact' && contactFormRef.current) {
+      // Scroll to contact form with offset
+      const yOffset = window.innerWidth < 640 ? -20 : -50;
+      const element = contactFormRef.current;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
   }, []);
 
   const isValidBirminghamPostcode = (postcode) => {
