@@ -2,7 +2,11 @@ import '../styles/globals.css';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 
-// Dynamically import components with priority loading
+// Dynamically import components
+const LoadingAnimation = dynamic(() => import('./loading'), { 
+  ssr: false 
+});
+
 const ScrollProgress = dynamic(() => import('../components/ScrollProgress'), { 
   ssr: false,
   loading: () => null,
@@ -253,8 +257,8 @@ export default function RootLayout({ children }) {
 
           .star {
             position: absolute;
-            width: 2px;
-            height: 2px;
+            width: clamp(1px, 0.5vw, 2px);
+            height: clamp(1px, 0.5vw, 2px);
             background: white;
             border-radius: 50%;
             transform: translateZ(0);
@@ -263,8 +267,8 @@ export default function RootLayout({ children }) {
 
           .shooting-star {
             position: absolute;
-            width: 3px;
-            height: 3px;
+            width: clamp(2px, 0.75vw, 3px);
+            height: clamp(2px, 0.75vw, 3px);
             background: linear-gradient(to right, transparent, white 50%, transparent);
             opacity: 0;
             transform: rotate(45deg);
@@ -275,12 +279,13 @@ export default function RootLayout({ children }) {
           .loading-text-container {
             position: relative;
             perspective: 1000px;
-            height: 200px;
+            height: 100px; /* Base height for smallest screens */
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             transform-style: preserve-3d;
+            padding: 0 10px; /* Base padding for smallest screens */
           }
 
           .letter-wrapper {
@@ -288,14 +293,16 @@ export default function RootLayout({ children }) {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 0.4em;
             transform-style: preserve-3d;
+            width: 100%;
+            max-width: 300px; /* Smaller max-width for mobile */
+            gap: 0.2em; /* Tighter spacing for mobile */
           }
 
           .letter {
             position: relative;
             font-family: system-ui, sans-serif;
-            font-size: 7rem;
+            font-size: 2.5rem; /* Base size for 320px */
             font-weight: 900;
             opacity: 0;
             transform-style: preserve-3d;
@@ -313,7 +320,7 @@ export default function RootLayout({ children }) {
 
           .letter.light {
             font-weight: 300;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em; /* Base letter spacing for mobile */
           }
 
           .letter.bold {
@@ -323,16 +330,16 @@ export default function RootLayout({ children }) {
 
           .dot {
             position: absolute;
-            right: -15px;
-            top: -5px;
-            width: 8px;
-            height: 8px;
+            right: -4px; /* Base position for 320px */
+            top: -2px;
+            width: 4px; /* Base size for 320px */
+            height: 4px;
             background: white;
             border-radius: 50%;
             opacity: 0;
             transform: scale(0);
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
-            animation: dotReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.8s;
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+            animation: dotReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.4s;
           }
 
           .letter::before {
@@ -351,10 +358,10 @@ export default function RootLayout({ children }) {
 
           .moon {
             position: absolute;
-            right: -25px;
-            top: -15px;
-            width: 25px;
-            height: 25px;
+            right: -8px; /* Base position for 320px */
+            top: -4px;
+            width: 8px; /* Base size for 320px */
+            height: 8px;
             border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, 
               rgba(255, 255, 255, 1) 0%,
@@ -364,10 +371,10 @@ export default function RootLayout({ children }) {
             opacity: 0;
             transform: scale(0) translateZ(100px);
             box-shadow: 
-              0 0 30px rgba(255,255,255,0.8),
-              0 0 60px rgba(96,165,250,0.4),
-              0 0 100px rgba(96,165,250,0.2);
-            animation: epicMoonReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.6s;
+              0 0 12px rgba(255,255,255,0.8),
+              0 0 24px rgba(96,165,250,0.4),
+              0 0 36px rgba(96,165,250,0.2);
+            animation: epicMoonReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 1.2s;
           }
 
           .final-flash {
@@ -385,14 +392,14 @@ export default function RootLayout({ children }) {
           }
 
           html[data-hydrated] .final-flash {
-            animation: epicFlash 1s ease-out forwards 2.2s;
+            animation: epicFlash 1s ease-out forwards 1.8s;
           }
 
           html[data-hydrated] .loading-container {
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.8s ease-out;
-            transition-delay: 2.6s;
+            transition-delay: 2.2s;
           }
 
           @keyframes cosmicReveal {
@@ -553,6 +560,144 @@ export default function RootLayout({ children }) {
             opacity: 1;
             transition: opacity 0.8s ease-out;
           }
+
+          /* Media Queries - Mobile First */
+          @media (min-width: 375px) {
+            .loading-text-container {
+              height: 120px;
+              padding: 0 15px;
+            }
+
+            .letter {
+              font-size: 3rem;
+            }
+
+            .dot {
+              right: -5px;
+              top: -2px;
+              width: 5px;
+              height: 5px;
+              box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            }
+
+            .moon {
+              right: -10px;
+              top: -5px;
+              width: 10px;
+              height: 10px;
+            }
+          }
+
+          @media (min-width: 425px) {
+            .loading-text-container {
+              height: 150px;
+              padding: 0 20px;
+            }
+
+            .letter {
+              font-size: 3.5rem;
+            }
+
+            .letter-wrapper {
+              max-width: 400px;
+            }
+
+            .dot {
+              right: -6px;
+              top: -3px;
+              width: 6px;
+              height: 6px;
+              box-shadow: 0 0 12px rgba(255,255,255,0.5);
+            }
+
+            .moon {
+              right: -12px;
+              top: -6px;
+              width: 12px;
+              height: 12px;
+            }
+          }
+
+          @media (min-width: 768px) {
+            .loading-text-container {
+              height: 180px;
+            }
+
+            .letter {
+              font-size: 5rem;
+            }
+
+            .letter-wrapper {
+              max-width: 500px;
+              gap: 0.3em;
+            }
+
+            .dot {
+              right: -8px;
+              top: -4px;
+              width: 8px;
+              height: 8px;
+              box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            }
+
+            .moon {
+              right: -15px;
+              top: -8px;
+              width: 15px;
+              height: 15px;
+            }
+          }
+
+          @media (min-width: 1024px) {
+            .loading-text-container {
+              height: 200px;
+            }
+
+            .letter {
+              font-size: 6rem;
+            }
+
+            .letter-wrapper {
+              max-width: 600px;
+              gap: 0.4em;
+            }
+
+            .dot {
+              right: -10px;
+              top: -5px;
+              width: 10px;
+              height: 10px;
+              box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            }
+
+            .moon {
+              right: -20px;
+              top: -10px;
+              width: 20px;
+              height: 20px;
+            }
+          }
+
+          @media (min-width: 1440px) {
+            .letter {
+              font-size: 7rem;
+            }
+
+            .dot {
+              right: -12px;
+              top: -6px;
+              width: 12px;
+              height: 12px;
+              box-shadow: 0 0 25px rgba(255,255,255,0.5);
+            }
+
+            .moon {
+              right: -25px;
+              top: -12px;
+              width: 25px;
+              height: 25px;
+            }
+          }
         `}} />
         <Script
           id="schema-structured-data"
@@ -637,77 +782,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <div className="loading-container">
-          <div className="cosmic-background"></div>
-          <div className="nebula"></div>
-          <div className="star-field">
-            {Array.from({ length: 3 }).map((_, layerIndex) => (
-              <div 
-                key={layerIndex}
-                className="star-layer"
-                style={{ transform: `translateZ(${-layerIndex * 200}px)` }}
-              >
-                {Array.from({ length: 50 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="star"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      transform: `translateZ(${Math.random() * 400}px)`,
-                      animationDelay: `${-Math.random() * 20}s`
-                    }}
-                  />
-                ))}
-              </div>
-            ))}
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={`shooting-${i}`}
-                className="shooting-star"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${i * 0.4}s`
-                }}
-              />
-            ))}
-          </div>
-          <div className="loading-text-container">
-            <div className="letter-wrapper">
-              {'LET'.split('').map((letter, i) => (
-                <span
-                  key={i}
-                  className="letter bold"
-                  data-letter={letter}
-                  style={{
-                    animationDelay: `${0.9 + i * 0.12}s`,
-                    '--random-y': `${Math.random() * 360}deg`,
-                    '--random-z': `${Math.random() * 90 - 45}deg`
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-              {'ORA'.split('').map((letter, i) => (
-                <span
-                  key={i + 3}
-                  className="letter light"
-                  data-letter={letter}
-                  style={{
-                    marginLeft: i === 0 ? '0.1em' : '0',
-                    letterSpacing: '0.15em',
-                    animationDelay: `${1.26 + i * 0.12}s`,
-                    '--random-y': `${Math.random() * 360}deg`,
-                    '--random-z': `${Math.random() * 90 - 45}deg`
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-              <div className="dot"></div>
-              <div className="moon"></div>
-            </div>
-          </div>
+          <LoadingAnimation />
         </div>
         <div className="final-flash"></div>
 
