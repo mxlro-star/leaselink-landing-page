@@ -1038,8 +1038,8 @@ export default function ContactForm() {
                     </span>
                     {selectedSlot && (
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-shine" />
-                    )}
-                  </button>
+              )}
+            </button>
 
                   <button
                     onClick={() => {
@@ -1051,7 +1051,7 @@ export default function ContactForm() {
                   >
                     Go Back
                   </button>
-                </div>
+              </div>
               </>
             )}
           </div>

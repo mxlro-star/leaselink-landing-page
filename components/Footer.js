@@ -66,12 +66,12 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Letora. All rights reserved.
           </p>
           {/* Company Legal Details */}
-          <div className="mt-4 text-xs text-gray-500 space-y-1">
+          {/* <div className="mt-4 text-xs text-gray-500 space-y-1">
             <p className="font-medium">LETORA LIMITED</p>
             <p>Company Registration No: 14829162</p>
             <p>71-75 Shelton Street, Covent Garden, London, WC2H 9JQ</p>
             <p>Registered in England and Wales</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
