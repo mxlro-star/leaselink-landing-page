@@ -67,8 +67,15 @@ export default function ContactForm() {
 
   // Add useEffect for scroll restoration
   useEffect(() => {
-    // Only scroll if the hash was explicitly set by user interaction, not on page load/refresh
+    // Only handle hash changes after initial load
+    let isInitialLoad = true;
+
     const handleHashChange = () => {
+      if (isInitialLoad) {
+        isInitialLoad = false;
+        return;
+      }
+
       if (window.location.hash === '#contact' && contactFormRef.current) {
         const yOffset = window.innerWidth < 640 ? -20 : -50;
         const element = contactFormRef.current;
