@@ -3,7 +3,7 @@ import Benefits from "../components/Benefits";
 import Process from "../components/Process";
 import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
-import ContactForm from "../components/ContactForm";
+import WhatsAppContact from "../components/WhatsAppContact";
 import Footer from "../components/Footer";
 import Tenants from "../components/Tenants";
 
@@ -16,7 +16,7 @@ export default function Home() {
       <Process data-reveal="true" />
       <Testimonials data-reveal="true" />
       <FAQ data-reveal="true" />
-      <ContactForm data-reveal="true" />
+      <WhatsAppContact data-reveal="true" />
       <Footer />
     </div>
   );
