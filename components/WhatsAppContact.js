@@ -143,9 +143,7 @@ export default function WhatsAppContact() {
 
           {/* Additional Info */}
           <div className={`mt-12 transform transition-all duration-1000 delay-500 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-            <p className="text-blue-200/70 text-center">
-              Prefer to call? Reach us at <a href="tel:+441234567890" className="text-emerald-400 hover:text-emerald-300 font-semibold">+44 123 456 7890</a>
-            </p>
+           
           </div>
         </div>
       </div>
